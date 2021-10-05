@@ -1,36 +1,41 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, Ref } from "vue";
 
-defineProps<{ msg: string }>()
+defineProps<{ msg: string }>();
 
-const count = ref(0)
+const count = ref(0);
+const userId = ref("");
+const password = ref("");
+const onInputCommon = (event: Event, r: Ref) => {
+  const { target } = event;
+  if (target instanceof HTMLInputElement) {
+    r.value = target.value;
+  }
+};
+const onInputUserId = (event: Event) => {
+  onInputCommon(event, userId);
+};
+const onInputPassword = (event: Event) => {
+  onInputCommon(event, password);
+};
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
-
-  <p>See <code>README.md</code> for more information.</p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <div>
+    <h1>{{ msg }}</h1>
+    <span>User ID</span>
+    <input type="text" id="userId" :value="userId" @input="onInputUserId" />
+    <br />
+    <span>Password</span>
+    <input
+      type="text"
+      id="password"
+      :value="password"
+      @input="onInputPassword"
+    />
+    <br />
+    <button type="button" id="loginBtn">Login</button>
+  </div>
 </template>
 
 <style scoped>
